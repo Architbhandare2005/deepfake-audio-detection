@@ -1,0 +1,11 @@
+/* Keep hidden dashboard states hidden despite the flex layout rules above. */
+.chart-placeholder[hidden],
+.result-empty[hidden],
+.result-content[hidden],
+.selected-file[hidden] {
+  display: none !important;
+}
+
+.hero-photo {
+  background-image: url('https://images.unsplash.com/photo-1561726976-e4fb49f9813b?auto=format&fit=crop&w=1800&q=85');
+}

@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4f3ee">
+  <meta name="description" content="Inspect short audio clips with an experimental CNN-based audio deepfake detector.">
+  <title>Audio Deepfake Detection — Audio authenticity lab</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/styles.css">
+  <link rel="stylesheet" href="/assets/state.css">
+  <link rel="stylesheet" href="/assets/media-ui.css">
+  <script src="/assets/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#overview" aria-label="Audio Deepfake Detection home">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        <span>Audio Deepfake Detection<span class="brand-slash">
+      </a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="side-nav" aria-label="Main navigation">
+        <a class="nav-link active" href="#overview"><span class="nav-icon">◫</span> Overview <span class="nav-dot"></span></a>
+        <a class="nav-link" href="#analyze"><span class="nav-icon">◉</span> Analyze audio</a>
+        <a class="nav-link" href="#waveform-view"><span class="nav-icon">∿</span> Waveforms views</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="side-label">RUNTIME</div>
+        <div class="runtime-card">
+          <span class="status-light" id="api-status-light"></span>
+          <div><strong id="api-status">Connecting</strong><small id="api-status-detail">Checking local API</small></div>
+        </div>
+        <div class="sidebar-foot"><span class="tiny-bars" aria-hidden="true">▂▅▃▇▅▂▆▃</span><span>LOCAL INFERENCE</span></div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <div class="breadcrumb">Audio intelligence <span>/</span> <b>Overview</b></div>
+        <div class="topbar-right"><span class="experiment-pill"><span></span> EXPERIMENTAL MODEL</span><div class="avatar">SV</div></div>
+      </header>
+
+      <section class="welcome-row">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> AUDIO AUTHENTICITY LAB</p>
+          <h1>Listen closer. <em>Look deeper.</em></h1>
+          <p class="intro">Play a clip, inspect its waveform and spectrogram, then compare the detector’s spoof and authentic scores.</p>
+        </div>
+        <div class="date-mark"><span class="date-ring">01</span><span>MODEL<br>WORKSPACE</span></div>
+      </section>
+
+      <section class="hero-card" aria-label="Audio analysis introduction">
+        <div class="hero-photo" role="img" aria-label="Recording studio microphone in a quiet booth"></div>
+        <div class="hero-shade"></div>
+        <div class="hero-copy">
+          <div class="hero-tag"><span class="pulse"></span> SIGNAL ANALYSIS / 01</div>
+          <h2>Every voice leaves<br>a different trace.</h2>
+          <p>Listen to the recording and inspect the patterns the model receives.</p>
+          <a class="hero-link" href="#analyze">Analyze a clip <span>↗</span></a>
+        </div>
+        <div class="hero-wave" aria-hidden="true"><svg viewBox="0 0 320 70" preserveAspectRatio="none"><path d="M0 36h18l7-8 7 22 9-39 10 48 10-27 8 11 9-20 9 31 8-15 10 2 8-15 8 32 10-25 8 8 8-14 8 27 10-19 8 10 10-22 8 30 9-15 8 3 9-23 9 34 8-15 8 8 9-17 10 21h20"/></svg><span>20 ms</span></div>
+        <div class="photo-credit">STUDIO IMAGE · <a href="https://unsplash.com/photos/selective-focus-of-white-metal-part-photo-YOwiXX0ebJA" target="_blank" rel="noreferrer">UNSPLASH</a></div>
+      </section>
+
+      <section class="metric-grid" aria-label="Model input specifications">
+        <article class="metric-card"><div class="metric-top"><span>ANALYSIS WINDOW</span><span class="metric-symbol">◷</span></div><div class="metric-value">2<span class="metric-unit"> sec</span></div><div class="metric-foot"><span class="metric-bar"><i style="width:68%"></i></span><span>per clip</span></div></article>
+        <article class="metric-card"><div class="metric-top"><span>SAMPLE RATE</span><span class="metric-symbol">⌁</span></div><div class="metric-value">16<span class="metric-unit"> kHz</span></div><div class="metric-foot"><span class="metric-bar mint"><i style="width:82%"></i></span><span>mono audio</span></div></article>
+        <article class="metric-card"><div class="metric-top"><span>MEL FREQUENCY BINS</span><span class="metric-symbol">▥</span></div><div class="metric-value">128<span class="metric-unit"> bins</span></div><div class="metric-foot"><span class="metric-bar violet"><i style="width:55%"></i></span><span>log-mel input</span></div></article>
+        <article class="metric-card image-metric"><img src="https://images.unsplash.com/photo-1574517947730-55cb23e608c2?auto=format&fit=crop&w=620&q=80" alt="Audio mixing console in a recording studio" loading="lazy"><div class="image-metric-shade"></div><div class="image-metric-copy"><span>FROM VOICE TO SIGNAL</span><b>Listen closer.</b></div><div class="photo-credit">STUDIO IMAGE · <a href="https://unsplash.com/photos/black-and-gray-audio-mixer-xo4ValczbuA" target="_blank" rel="noreferrer">UNSPLASH</a></div></article>
+      </section>
+
+      <section class="analysis-section" id="analyze">
+        <div class="section-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> LIVE ANALYSIS</p><h2>Read the Audio</h2></div><span class="section-index">01 <i>/</i> 03</span></div>
+        <div class="analysis-grid">
+          <article class="panel upload-panel">
+            <div class="panel-heading"><div><span class="panel-kicker">INPUT SOURCE</span><h3>Analyze a voice clip</h3></div><span class="panel-icon">↥</span></div>
+            <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Choose an audio file">
+              <input type="file" id="audio-file" accept="audio/*,.wav,.mp3,.flac,.ogg,.m4a,.aac" hidden>
+              <div class="upload-icon"><span>↥</span></div>
+              <strong id="drop-title">Drop an audio file here</strong>
+              <span class="drop-hint" id="drop-hint">or <u>browse files</u> from your device</span>
+              <div class="file-types"><span>WAV</span><span>MP3</span><span>FLAC</span><span>20 MB MAX</span></div>
+            </div>
+            <div class="selected-file" id="selected-file" hidden><div class="file-wave">▂▅▃▇▅▂▆</div><div class="selected-meta"><b id="selected-name"></b><span id="selected-size"></span></div><button class="remove-file" id="remove-file" aria-label="Remove selected file">×</button></div>
+            <button class="analyze-button" id="analyze-button" disabled><span class="button-label">Analyze clip</span><span class="button-arrow">↗</span></button>
+            <p class="upload-note"><span>↳</span> Up to 2 seconds are analyzed. Files stay in this local session.</p>
+          </article>
+
+          <article class="panel result-panel">
+            <div class="panel-heading"><div><span class="panel-kicker">MODEL OUTPUT</span><h3>Authentic / spoof scores</h3></div><span class="live-tag"><i></i> <span id="result-state">AWAITING AUDIO</span></span></div>
+            <div class="result-empty" id="result-empty"><div class="empty-radar"><span></span><i></i><b></b></div><strong>Your readout appears here</strong><p>Add a clip to hear it and see the model scores.</p></div>
+            <div class="result-content" id="result-content" hidden>
+              <div class="result-summary"><div class="score-ring" id="score-ring"><div><b id="score-value">—</b><span>SIGNAL<br>SCORE</span></div></div><div class="result-label"><span class="classification" id="classification">—</span><strong id="result-file-name">—</strong><span id="result-duration">—</span></div></div>
+              <div class="probability-list"><div class="probability-row"><span class="prob-dot authentic-dot"></span><span>Authentic</span><div class="prob-track"><i id="authentic-bar"></i></div><b id="authentic-value">—</b></div><div class="probability-row"><span class="prob-dot spoof-dot"></span><span>Spoof</span><div class="prob-track"><i id="spoof-bar"></i></div><b id="spoof-value">—</b></div></div>
+              <div class="result-disclaimer" id="result-note"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="result-explainer-section" id="result-explainer" hidden>
+        <div class="section-heading compact-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> RESULT EXPLAINER</p><h2>What this score says</h2></div><span class="section-caption">MODEL OUTPUT · NOT A FORENSIC VERDICT</span></div>
+        <div class="explainer-grid">
+          <article class="panel explainer-summary">
+            <div class="explainer-status"><span class="explainer-mark" id="explainer-mark">◉</span><span class="panel-kicker">DECISION SUMMARY</span></div>
+            <h3 id="explanation-title">—</h3>
+            <p id="explanation-copy">—</p>
+            <div class="score-gap-row"><span>CLASS SCORE GAP</span><b id="score-gap">—</b></div>
+          </article>
+          <article class="panel explainer-guide">
+            <div class="panel-kicker">HOW TO READ IT</div>
+            <ol class="explanation-steps">
+              <li><span>01</span><p><b>Audio becomes a spectrogram.</b> The first two seconds are resampled to 16 kHz and represented as 128 log-mel frequency bands over 63 frames.</p></li>
+              <li><span>02</span><p><b>The CNN compares learned patterns.</b> It returns one sigmoid score for the spoof class; the authentic score is its complement.</p></li>
+              <li><span>03</span><p><b>Review the signal views.</b> Use playback, waveform, and spectrogram together. This model does not mark exact frames or identify a voice generator.</p></li>
+            </ol>
+            <p class="explainer-caveat" id="explainer-caveat">Scores are experimental outputs. They are not validated confidence estimates or proof that a recording is genuine or synthetic.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="waveform-section" id="waveform-view">
+        <div class="section-heading compact-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> TIME-DOMAIN VIEW</p><h2>Waveform & playback</h2></div><span class="section-caption" id="waveform-caption">CHOOSE AUDIO TO BEGIN</span></div>
+        <article class="panel waveform-panel">
+          <audio id="audio-preview" preload="metadata"></audio>
+          <div class="waveform-toolbar">
+            <div class="waveform-track-info"><span class="panel-kicker">SELECTED CLIP</span><b id="waveform-file-name">No audio selected</b></div>
+            <div class="waveform-controls">
+              <button class="play-button" id="play-button" type="button" disabled><span class="play-icon" id="play-icon">▶</span><span id="play-label">Play audio</span></button>
+              <button class="restart-button" id="restart-button" type="button" aria-label="Restart audio" disabled>↺</button>
+              <span class="playback-clock"><b id="play-current-time">0:00</b><i>/</i><span id="play-duration">0:00</span></span>
+            </div>
+          </div>
+          <div class="waveform-stage" id="waveform-stage">
+            <canvas id="waveform-canvas" aria-label="Audio amplitude waveform"></canvas>
+            <div class="waveform-placeholder" id="waveform-placeholder"><span class="wave-placeholder-icon">∿</span><b>Choose a clip to draw its waveform</b><span>Playback stays on this device.</span></div>
+            <div class="waveform-playhead" id="waveform-playhead" hidden></div>
+          </div>
+          <input class="seek-slider" id="seek-slider" type="range" min="0" max="1000" value="0" aria-label="Seek through audio" disabled>
+          <div class="waveform-axis" id="waveform-axis"><span>0:00</span><span>—</span><span>—</span><span>—</span><span>—</span></div>
+          <div class="waveform-foot"><span>AMPLITUDE ENVELOPE <i>·</i> FULL CLIP</span><span id="waveform-status">NO AUDIO LOADED</span></div>
+        </article>
+      </section>
+
+      <section class="spectrogram-section">
+        <div class="section-heading compact-heading"><div><p class="eyebrow"><span class="eyebrow-line"></span> FEATURE VIEW</p><h2>Log-mel spectrogram</h2></div><span class="section-caption" id="spectrogram-caption">WAITING FOR AUDIO</span></div>
+        <article class="panel spectrogram-panel">
+          <div class="spectrogram-wrap"><div class="y-axis"><span>8 kHz</span><span>4 kHz</span><span>2 kHz</span><span>0</span></div><div class="spectrogram-chart"><canvas id="spectrogram" aria-label="Log-mel spectrogram heatmap"></canvas><div class="chart-placeholder" id="chart-placeholder"><span class="placeholder-wave">▁▂▄▃▅▂▇▃▆▁</span><b>Upload audio to reveal its spectral pattern</b></div><div class="spectrogram-playhead" id="spectrogram-playhead" hidden></div><div class="x-axis"><span data-axis="0">0.0 s</span><span data-axis="1">0.5 s</span><span data-axis="2">1.0 s</span><span data-axis="3">1.5 s</span><span data-axis="4">2.0 s</span></div></div><div class="color-scale"><span>LOW</span><i></i><span>HIGH</span></div></div>
+          <div class="spectrogram-foot"><span>128 MEL BINS <i>·</i> 63 TIME FRAMES <i>·</i> LOG POWER</span><span>FEATURE EXTRACTION <b>LIBROSA</b></span></div>
+        </article>
+      </section>
+
+
+      <footer class="page-footer"><span> <i>·</i> Audio deepfake detection prototype</span><span>Scores are model outputs, not proof of authenticity.</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

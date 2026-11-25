@@ -35,7 +35,3 @@ The backend mirrors the notebook's feature pipeline: mono audio resampled to 16 
 - Check runtime and checkpoint status.
 
 The notebook does not include held-out evaluation metrics. Scores are experimental model outputs and should not be treated as proof of authenticity or as a validated confidence estimate. The training notebook optionally reads FakeAVCeleb from a fixed Colab path, so the interface describes that dataset as optional.
-
-## Image credits
-
-The dashboard uses studio photographs served from Unsplash: [recording studio image](https://unsplash.com/photos/microphone-in-recording-studio-2f02b77fc618) and [audio mixing console](https://unsplash.com/photos/black-and-gray-audio-mixer-xo4ValczbuA). An internet connection is needed to load these photos and the hosted fonts; the application and model inference run locally.
